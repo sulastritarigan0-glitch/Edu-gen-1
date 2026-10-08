@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Key Security Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            background: #eef1f5;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Secure API Call Demo</h1>
+        <p>This frontend calls the Node.js backend proxy <code>/api/data</code>. The API Key is safely stored in the backend server environment variables (<code>.env</code>) and is never exposed to the client.</p>
+        <button id="fetchBtn">Fetch Data from Backend</button>
+        <h3>Response:</h3>
+        <pre id="output">Click button to fetch data...</pre>
+    </div>
+
+    <script>
+        document.getElementById('fetchBtn').addEventListener('click', async () => {
+            const output = document.getElementById('output');
+            output.textContent = 'Loading...';
+            try {
+                const response = await fetch('/api/data');
+                const data = await response.json();
+                output.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                output.textContent = 'Error fetching data: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>
